@@ -25,6 +25,7 @@ import { GameService } from '../../services/game';
 import { TimeService } from '../../services/configuration/time';
 import { PhysicsService } from '../../services/configuration/physics';
 import { GameObjectsService } from '../../services/gameObjects';
+import { CameraService } from '../../services/configuration/camera';
 
 @NgModule({
 	imports: [ 
@@ -57,6 +58,7 @@ import { GameObjectsService } from '../../services/gameObjects';
 		TimeService,
 		PhysicsService,
 		GameService,
+		CameraService,
 		GameObjectsService
 	],
 	bootstrap: [ AppComponent ]

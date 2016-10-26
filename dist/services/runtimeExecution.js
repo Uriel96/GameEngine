@@ -16,9 +16,11 @@ var input_1 = require('./configuration/input');
 var time_1 = require('./configuration/time');
 var physics_1 = require('./configuration/physics');
 var gameObjects_1 = require('./gameObjects');
+var camera_1 = require('./configuration/camera');
 var RuntimeExecutionService = (function () {
-    function RuntimeExecutionService(timeService, physicsService, inputService, componentsService, worldObjectsService, gameObjectsService) {
+    function RuntimeExecutionService(timeService, cameraService, physicsService, inputService, componentsService, worldObjectsService, gameObjectsService) {
         this.timeService = timeService;
+        this.cameraService = cameraService;
         this.physicsService = physicsService;
         this.inputService = inputService;
         this.componentsService = componentsService;
@@ -40,7 +42,7 @@ var RuntimeExecutionService = (function () {
         this.timeService.setTime();
         this.gameObjectsService.gameObjects.forEach(function (gameObject) {
             gameObject.components.forEach(function (component) {
-                component.executeCode(gameObject, _this.inputService, input_1.KEY, _this.physicsService, _this.timeService, _this.gameObjectsService.gameObjects);
+                component.executeCode(gameObject, _this.inputService, input_1.KEY, _this.physicsService, _this.timeService, _this.cameraService, _this.gameObjectsService.gameObjects);
             });
         });
     };
@@ -49,13 +51,14 @@ var RuntimeExecutionService = (function () {
         this.timeService.clear();
     };
     RuntimeExecutionService.prototype.render = function (canvas, context) {
+        var _this = this;
         if (!this.running)
             return;
         context.fillStyle = "#FFFFFF";
         context.fillRect(0, 0, canvas.width, canvas.height);
         this.gameObjectsService.gameObjects.forEach(function (gameObject) {
             gameObject.update();
-            gameObject.render(context, canvas);
+            gameObject.render(_this.cameraService, context, canvas);
         });
     };
     RuntimeExecutionService.prototype.precompile = function (canvas, context) {
@@ -75,7 +78,7 @@ var RuntimeExecutionService = (function () {
         });
     };
     RuntimeExecutionService.prototype.generateCode = function (component) {
-        eval("component['executeCode'] = function(gameObject, keyboard, KEY, physics, timer, gameObjects) {\n            " + component.codeText + "\n            gameObject.update();\n        };");
+        eval("component['executeCode'] = function(gameObject, keyboard, KEY, physics, timer, camera, gameObjects) {\n            " + component.codeText + "\n            gameObject.update();\n        };");
     };
     RuntimeExecutionService.prototype.setPlayMode = function () {
         this.running = true;
@@ -88,7 +91,7 @@ var RuntimeExecutionService = (function () {
     };
     RuntimeExecutionService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [time_1.TimeService, physics_1.PhysicsService, input_1.InputService, components_1.ComponentsService, worldObjects_1.WorldObjectsService, gameObjects_1.GameObjectsService])
+        __metadata('design:paramtypes', [time_1.TimeService, camera_1.CameraService, physics_1.PhysicsService, input_1.InputService, components_1.ComponentsService, worldObjects_1.WorldObjectsService, gameObjects_1.GameObjectsService])
     ], RuntimeExecutionService);
     return RuntimeExecutionService;
 }());

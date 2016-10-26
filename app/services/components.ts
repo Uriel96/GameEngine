@@ -3,6 +3,7 @@ import { Component } from '../models/component';
 import { KEY } from './configuration/input';
 import { PhysicsService } from './configuration/physics';
 import { GameObject } from '../models/gameObject';
+import { CameraService } from './configuration/camera';
 
 @Injectable()
 export class ComponentsService {
@@ -25,7 +26,7 @@ export class ComponentsService {
                 } else if(gameObject.inGround && keyboard.isKeyUp(KEY.UpArrow)){
                     timer.clearTimer();
                 }
-                
+                camera.chase(gameObject);
                 /*var objetos = physics.getInRadius(gameObject, 100);
                 if(objetos.length > 0){
                     console.log(objetos);

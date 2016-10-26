@@ -10,6 +10,7 @@ import { InputService, KEY } from './configuration/input';
 import { TimeService } from './configuration/time';
 import { PhysicsService } from './configuration/physics';
 import { GameObjectsService } from './gameObjects';
+import { CameraService } from './configuration/camera';
 
 @Injectable()
 export class RuntimeExecutionService {
@@ -17,6 +18,7 @@ export class RuntimeExecutionService {
 
     constructor(
         private timeService: TimeService,
+        private cameraService: CameraService,
         private physicsService: PhysicsService,
         private inputService: InputService,
         private componentsService: ComponentsService,
@@ -36,7 +38,7 @@ export class RuntimeExecutionService {
         this.timeService.setTime();
         this.gameObjectsService.gameObjects.forEach(gameObject => {
             gameObject.components.forEach(component => {
-                (<any>component).executeCode(gameObject, this.inputService, KEY, this.physicsService, this.timeService, this.gameObjectsService.gameObjects);
+                (<any>component).executeCode(gameObject, this.inputService, KEY, this.physicsService, this.timeService, this.cameraService, this.gameObjectsService.gameObjects);
             });
         });
     }
@@ -52,7 +54,7 @@ export class RuntimeExecutionService {
         context.fillRect(0, 0, canvas.width, canvas.height);
         this.gameObjectsService.gameObjects.forEach(gameObject => {
             gameObject.update();
-            gameObject.render(context, canvas);
+            gameObject.render(this.cameraService, context, canvas);
         });
     }
 
@@ -72,7 +74,7 @@ export class RuntimeExecutionService {
     }
 
     private generateCode(component: Component){
-        eval(`component['executeCode'] = function(gameObject, keyboard, KEY, physics, timer, gameObjects) {
+        eval(`component['executeCode'] = function(gameObject, keyboard, KEY, physics, timer, camera, gameObjects) {
             ${component.codeText}
             gameObject.update();
         };`);

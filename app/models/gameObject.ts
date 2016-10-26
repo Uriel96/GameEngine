@@ -7,6 +7,7 @@ import { PhysicsService } from '../services/configuration/physics';
 import { InputService } from '../services/configuration/input';
 import { TimeService } from '../services/configuration/time';
 import { Component } from './component';
+import { CameraService } from '../services/configuration/camera';
 
 export class GameObject extends Object {
     public velocityY: number = 0;
@@ -96,7 +97,7 @@ export class GameObject extends Object {
         this.x += this.velocityX * this.timeService.deltaTime / 10;
     }
 
-    render(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
-        ctx.drawImage(this.image, this.x, this.y, this.sprite.width, this.sprite.height);
+    render(cameraService: CameraService, ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
+        ctx.drawImage(this.image, this.x-cameraService.realPositionX, this.y-cameraService.realPositionY, this.sprite.width, this.sprite.height);
     }
 }

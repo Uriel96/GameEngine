@@ -11,8 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var CameraService = (function () {
     function CameraService() {
+        this.realPositionX = 0;
+        this.realPositionY = 0;
     }
-    CameraService.prototype.chase = function (gamObject) {
+    CameraService.prototype.chase = function (gameObject) {
+        this.realPositionX = gameObject.x - 350;
+        this.realPositionY = gameObject.y - 150;
     };
     CameraService = __decorate([
         core_1.Injectable(), 

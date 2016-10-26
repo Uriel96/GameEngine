@@ -35,6 +35,7 @@ var game_1 = require('../../services/game');
 var time_1 = require('../../services/configuration/time');
 var physics_1 = require('../../services/configuration/physics');
 var gameObjects_1 = require('../../services/gameObjects');
+var camera_1 = require('../../services/configuration/camera');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -70,6 +71,7 @@ var AppModule = (function () {
                 time_1.TimeService,
                 physics_1.PhysicsService,
                 game_1.GameService,
+                camera_1.CameraService,
                 gameObjects_1.GameObjectsService
             ],
             bootstrap: [app_component_1.AppComponent]

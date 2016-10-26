@@ -90,8 +90,8 @@ var GameObject = (function (_super) {
         this.velocityX *= this._friction;
         this.x += this.velocityX * this.timeService.deltaTime / 10;
     };
-    GameObject.prototype.render = function (ctx, canvas) {
-        ctx.drawImage(this.image, this.x, this.y, this.sprite.width, this.sprite.height);
+    GameObject.prototype.render = function (cameraService, ctx, canvas) {
+        ctx.drawImage(this.image, this.x - cameraService.realPositionX, this.y - cameraService.realPositionY, this.sprite.width, this.sprite.height);
     };
     return GameObject;
 }(object_1.Object));
