@@ -1,0 +1,81 @@
+<div main>
+    <nav class="navbar navbar-light bg-faded">
+        <button class="btn btn-secondary" (click)="run()">
+            <i class="fa fa-play" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-secondary" (click)="stop()">
+            <i class="fa fa-stop" aria-hidden="true"></i>
+        </button>
+    </nav>
+    <div class="panel-container">
+        <!-- Left Content -->
+        <div class="panel-left">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active">
+                        <i class="fa fa-image" aria-hidden="true"></i>
+                        Sprites
+                    </a>
+                </li>
+            </ul>
+            <!-- Sprites Content -->
+            <div class="tab-content panel game-disablement-content">
+                <sprites-component></sprites-component>
+            </div>
+        </div>
+        <div class="splitter"></div>
+        <!-- Upper-Center Content -->
+        <div class="panel-center panel-container-vertical">
+            <!-- World Content -->
+            <div class="panel-top">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#world-component" role="tab" aria-controls="world">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            World
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#game-component" role="tab" aria-controls="game">
+                            <i class="fa fa-gamepad" aria-hidden="true"></i>
+                            Game
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <world-component class="tab-pane active game-disablement-content" id="world-component" role="tabpanel"></world-component>
+                    <game-component class="tab-pane" id="game-component" role="tabpanel"></game-component>
+                </div>
+            </div>
+            <div class="splitter-horizontal"></div>
+            <!-- Code Content -->
+            <div class="panel-bottom">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#code-component" role="tab" aria-controls="code">
+                            <i class="fa fa-code" aria-hidden="true"></i>
+                            Code
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content game-disablement-content">
+                    <code-component class="tab-pane active" id="code-component" role="tabpanel"></code-component>
+                </div>
+            </div>
+        </div>
+        <div class="splitter"></div>
+        <div class="panel-right">
+        <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#components-component" role="tab" aria-controls="components">Components</a>
+                </li>
+            </ul>
+            <div class="tab-content game-disablement-content">
+                <!--<components-component class="tab-pane active" id="components-component" role="tabpanel"></components-component>-->
+            </div>
+        </div>
+    </div>
+
+    <create-sprite-modal [sprites]="sprites">
+    </create-sprite-modal>
+</div>

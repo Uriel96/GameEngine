@@ -1,0 +1,6 @@
+.game-disabled-content {
+    z-index: 1000;
+    background-color: lightblue;
+    opacity: 0.7;
+    pointer-events: none;
+}

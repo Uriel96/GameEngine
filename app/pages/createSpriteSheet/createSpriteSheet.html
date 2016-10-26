@@ -1,0 +1,67 @@
+<!-- Sprite Sheet -->
+<div class="modal fade" id="create-sprite-sheet-modal" tabindex="-1" role="dialog" aria-labelledby="spriteSheetModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Create Sprite Sheet</h4>
+            </div>
+            <!-- Body -->
+            <div class="modal-body">
+                <div class="col-sm-3 card">
+                    <!-- Actions Block -->
+                    <div class="card-block">
+                        <h4 class="card-title">Actions</h4>
+                        <!-- List of Actions -->
+                        <div class="input-group">
+                            <select id="list-actions" class="form-control" #t (change)="changeAction(t.value)">
+                                <option class="input-group" *ngFor="let action of actions" [value]="action.name">
+                                   {{action.name}}
+                                </option>
+                            </select>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-secondary" (click)="deleteAction(t.value)">
+                                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;
+                                </button>
+                            </span>
+                        </div>
+                        <!-- Add Action -->
+                        <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="newActionName">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-secondary" (click)="addAction()">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Options Block -->
+                    <div class="card-block">
+                        <h4 class="card-title">Options</h4>
+                        <span>Divisions</span>
+                        Width
+                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="action.numCol">
+                        Height
+                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="action.numRow">
+                        Speed
+                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="action.speed">
+                    </div>
+                </div>
+                <!-- Image -->
+                <div class="col-sm-9 card" style="position:relative;">
+                    <img id="sprite-sheet" src="http://www.html5canvastutorials.com/cookbook/ch8/img/hero_sprites.png">
+                </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-assertive" data-toggle="modal" data-target="#show-action-modal" (click)="showAnimation()">Preview</button>
+                <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="createSpriteSheet()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<show-action-modal [action]="action">
+</show-action-modal>

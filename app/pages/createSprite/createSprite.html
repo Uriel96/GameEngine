@@ -1,0 +1,62 @@
+<div class="modal fade" id="create-sprite-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Create a Sprite</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="inputName" class="col-xs-2">Name</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="text" placeholder="Character" [(ngModel)]="sprite.name">
+                    </div>
+                </div>
+                <label>Get Sprite from</label>
+                <div class="container-fluid row">
+                    <label class="custom-control custom-radio">
+                        <input id="radio1" name="radio" type="radio" class="custom-control-input" checked>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Url</span>
+                        <input class="form-control" [(ngModel)]="sprite.url" type="text" placeholder="http://examplepage/example.png">
+                    </label>
+                </div>
+                <div class="container-fluid row">
+                    <label class="custom-control custom-radio">
+                        <input id="radio2" name="radio" type="radio" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Upload from your Computer</span>
+                        <button class="btn btn-default">Upload</button>
+                    </label>
+                </div>
+                <div class="container-fluid row">
+                    <label class="custom-control custom-radio">
+                        <input id="radio3" name="radio" type="radio" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Choose one from Gallery</span>
+                        <button class="btn btn-default">Select</button>
+                    </label>
+                </div>
+                <br />
+                Is it a spritesheet? If so, split the content.
+                <button class="btn btn-default" data-toggle="modal" data-target="#create-sprite-sheet-modal">Split</button>
+                <div class="container-fluid row">
+                    <button class="btn btn-default" data-toggle="modal" data-target="#resize-sprite-modal" (click)="changeDimensions()">Change Dimensions</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="createSprite()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<resize-sprite-modal [sprite]="sprite">
+</resize-sprite-modal>
+
+
+<create-sprite-sheet-modal [sprite]="sprite">
+</create-sprite-sheet-modal>

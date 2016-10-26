@@ -1,0 +1,16 @@
+<ul class="list-group" id="sprites-container">
+    <li sprite (selectedSpriteChanged)="setSelectedSprite($event)" [id]="'sprite' + sprite.name" class="list-group-item draggable2" *ngFor="let sprite of sprites" style="padding: 0px 0px;">
+        <h5>
+            <img [src]="sprite.src" style="max-height: 40px; max-width: 40px;" align="middle" />
+            {{ sprite.name }}
+        </h5>
+    </li>
+</ul>
+<div class="footer btn-group" role="group">
+    <button class="btn btn-secondary" data-toggle="modal" data-target="#create-sprite-modal">
+        <i class="fa fa-plus" aria-hidden="true"></i> Create
+    </button>
+    <button class="btn btn-secondary" (click)="deleteSprite()">
+        <i class="fa fa-minus" aria-hidden="true"></i> Delete
+    </button>
+</div>
