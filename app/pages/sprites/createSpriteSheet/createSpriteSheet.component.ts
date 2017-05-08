@@ -1,29 +1,32 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
+import { Action } from '../../../models/action';
+import { Sprite } from '../../../models/sprite';
+import { ActionService } from '../../../services/action';
 declare var $: any;
 
 @Component({
     selector: 'create-sprite-sheet-modal',
-    templateUrl: './app/pages/createSpriteSheet/createSpriteSheet.html'
+    templateUrl: './app/pages/sprites/createSpriteSheet/createSpriteSheet.html'
 })
 
 export class CreateSpriteSheetComponent implements AfterViewInit {
-    @Input() sprite: any;
-    newActionName: string;
-    actions: Array<any>;
-    action: any;
+    @Input() sprite: Sprite;
+    newAction: Action;
+    selectedAction: Action;
 	startAnimation: boolean = false;
     
-    constructor(){
-        this.actions = [];
-        this.action = {
-            name: "",
-            
+    constructor(private _actions: ActionService) {
+        this.newAction = {
+            name: ""
         };
 	}
+
     ngAfterViewInit() {
-        /*Select Action of Sprite Sheet*/
+        //Get Original Dimensions form Image
         var originalHeight = $('#sprite-sheet').naturalHeight;
         var originalWidth = $('#sprite-sheet').naturalWidth;
+
+        //Make Image Selectable
         $('#sprite-sheet').imgAreaSelect({
             aspectRatio: '0:1',
             handles: true,
@@ -34,16 +37,18 @@ export class CreateSpriteSheetComponent implements AfterViewInit {
                 if (!selection.width || !selection.height){
                     return;
                 }
+
+                //Retrieve dimensions from the selection
                 var porcX = img.naturalWidth / img.width;
                 var porcY = img.naturalHeight / img.height;
-                this.action.resizedx1 = selection.x1;
-                this.action.resizedy1 = selection.y1;
-                this.action.resizedx2 = selection.x2;
-                this.action.resizedy2 = selection.y2;
-                this.action.x1 = Math.round(selection.x1 * porcX);
-                this.action.y1 = Math.round(selection.y1 * porcY);
-                this.action.x2 = Math.round(selection.x2 * porcX);
-                this.action.y2 = Math.round(selection.y2 * porcY);
+                this.selectedAction.resizedx1 = selection.x1;
+                this.selectedAction.resizedy1 = selection.y1;
+                this.selectedAction.resizedx2 = selection.x2;
+                this.selectedAction.resizedy2 = selection.y2;
+                this.selectedAction.x1 = Math.round(selection.x1 * porcX);
+                this.selectedAction.y1 = Math.round(selection.y1 * porcY);
+                this.selectedAction.x2 = Math.round(selection.x2 * porcX);
+                this.selectedAction.y2 = Math.round(selection.y2 * porcY);
                 
                 this.updateGrid();
             }
@@ -51,15 +56,15 @@ export class CreateSpriteSheetComponent implements AfterViewInit {
     }
     
     updateGrid(): void {
-        var posX = this.action.resizedx1 + $('#sprite-sheet').position().left;
-        var posY = this.action.resizedy1 + $('#sprite-sheet').position().top;
-        var width = this.action.resizedx2 - this.action.resizedx1;
-        var height = this.action.resizedy2 - this.action.resizedy1;
+        var posX = this.selectedAction.resizedx1 + $('#sprite-sheet').position().left;
+        var posY = this.selectedAction.resizedy1 + $('#sprite-sheet').position().top;
+        var width = this.selectedAction.resizedx2 - this.selectedAction.resizedx1;
+        var height = this.selectedAction.resizedy2 - this.selectedAction.resizedy1;
         $('.box').remove();
-        for(var i = 0; i < this.action.numCol; i++){
-            for(var j = 0; j < this.action.numRow; j++){
-                var w = width / this.action.numCol;
-                var h = height / this.action.numRow;
+        for(var i = 0; i < this.selectedAction.numCol; i++){
+            for(var j = 0; j < this.selectedAction.numRow; j++){
+                var w = width / this.selectedAction.numCol;
+                var h = height / this.selectedAction.numRow;
                 var pX = posX + (i * w);
                 var pY = posY + (j * h);
                 $('#sprite-sheet').parent().append('<div class="box" style="top:' + pY + ';left: ' + pX + ';width:' + w + 'px;height:' + h + 'px;"></div>');
@@ -67,44 +72,29 @@ export class CreateSpriteSheetComponent implements AfterViewInit {
         }
     }
     
-    addAction(): void {
-        this.actions.push({
-            name: this.newActionName
-        });
-        this.changeAction(this.newActionName);
-        this.newActionName = '';
-    }
-    
-    getAction(actionName: string): any {
-        return this.actions.find(function(anAction){
-            return anAction.name == actionName;
-        });
-    }
-    
-    changeAction(actionName: string): void {
-        this.action = this.getAction(actionName);
-        if(this.action) {
+    changeAction(name: string): void {
+        this.selectedAction = this._actions.get(this.sprite, name);
+        if(this.selectedAction) {
             var spriteSheet = $('#sprite-sheet').imgAreaSelect({ 
                 instance: true
             });
-            spriteSheet.setSelection(this.action.resizedx1,this.action.resizedy1, this.action.resizedx2, this.action.resizedy2, true);
+            spriteSheet.setSelection(this.selectedAction.resizedx1,this.selectedAction.resizedy1, this.selectedAction.resizedx2, this.selectedAction.resizedy2, true);
             spriteSheet.setOptions({ show: true });
             spriteSheet.update();
         }
     }
     
     deleteAction(actionName: string): void {
-        for(var i = 0; i < this.actions.length; i++){
-            if(this.actions[i].name == actionName){
-                this.actions.splice(i, 1);
-                return;
-            }
-        }
+        this._actions.delete(this.sprite, actionName);
+    }
+
+    addAction(): void {
+        this._actions.add(this.sprite, this.newAction);
     }
     
     showAnimation() {
-        var width = (this.action.x2 - this.action.x1) / this.action.numCol;
-        var height = (this.action.y2 - this.action.y1) / this.action.numRow;
+        var width = (this.selectedAction.x2 - this.selectedAction.x1) / this.selectedAction.numCol;
+        var height = (this.selectedAction.y2 - this.selectedAction.y1) / this.selectedAction.numRow;
         $('.crop').css('width', width);
         $('.crop').css('height', height);
         var i = 0;

@@ -15,6 +15,8 @@ declare var $: any;
 
 export class AppComponent implements AfterViewInit {
     
+    selectedSprite: Sprite;
+
     constructor(
         private runtimeExecutionService: RuntimeExecutionService,
         private spritesService: SpritesService

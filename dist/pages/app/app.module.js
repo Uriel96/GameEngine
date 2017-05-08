@@ -21,9 +21,7 @@ var code_component_1 = require('../code/code.component');
 var code_directive_1 = require('../code/code.directive');
 var sprites_component_1 = require('../sprites/sprites.component');
 var sprite_directive_1 = require('../sprites/sprite.directive');
-var createSprite_component_1 = require('../createSprite/createSprite.component');
 var resizeSprite_component_1 = require('../resizeSprite/resizeSprite.component');
-var createSpriteSheet_component_1 = require('../createSpriteSheet/createSpriteSheet.component');
 var showAction_component_1 = require('../showAction/showAction.component');
 var app_1 = require('../../services/app');
 var runtimeExecution_1 = require('../../services/runtimeExecution');
@@ -36,6 +34,10 @@ var time_1 = require('../../services/configuration/time');
 var physics_1 = require('../../services/configuration/physics');
 var gameObjects_1 = require('../../services/gameObjects');
 var camera_1 = require('../../services/configuration/camera');
+var createSprite_component_1 = require('../sprites/createSprite/createSprite.component');
+var createSpriteSheet_component_1 = require('../sprites/createSpriteSheet/createSpriteSheet.component');
+var action_1 = require('../../services/action');
+var global_1 = require('../../services/global');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -72,7 +74,9 @@ var AppModule = (function () {
                 physics_1.PhysicsService,
                 game_1.GameService,
                 camera_1.CameraService,
-                gameObjects_1.GameObjectsService
+                gameObjects_1.GameObjectsService,
+                action_1.ActionService,
+                global_1.GlobalService
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

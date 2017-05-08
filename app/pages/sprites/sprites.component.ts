@@ -3,6 +3,8 @@ import { AppDirective } from '../app/app.directive';
 import { SpriteDirective } from './sprite.directive';
 import { Sprite } from '../../models/sprite';
 import { SpritesService } from '../../services/sprites';
+import { InputService } from '../../services/configuration/input';
+import { GlobalService } from '../../services/global';
 
 declare var $: any;
 
@@ -13,7 +15,8 @@ declare var $: any;
 
 export class SpritesComponent implements AfterViewInit {
     sprites: Sprite[];
-    constructor(private spritesService: SpritesService) {
+
+    constructor(private _global: GlobalService, private spritesService: SpritesService) {
 		this.sprites = this.spritesService.getSprites();
 	}
     
@@ -28,7 +31,7 @@ export class SpritesComponent implements AfterViewInit {
     }
     
     setSelectedSprite(spriteName: string){
-        this.spritesService.setSelectedSprite(spriteName);
+        this._global.selectedSprite = this.spritesService.getSpriteByName(spriteName);
     }
     
     deleteSprite(): void {

@@ -29,7 +29,7 @@
                         </div>
                         <!-- Add Action -->
                         <div class="input-group">
-                            <input type="text" class="form-control" [(ngModel)]="newActionName">
+                            <input type="text" class="form-control" [(ngModel)]="newAction.name">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-secondary" (click)="addAction()">
                                     <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
@@ -42,11 +42,11 @@
                         <h4 class="card-title">Options</h4>
                         <span>Divisions</span>
                         Width
-                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="action.numCol">
+                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="selectedAction.numCol">
                         Height
-                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="action.numRow">
+                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="selectedAction.numRow">
                         Speed
-                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="action.speed">
+                        <input type="number" class="form-control" value="1" min="1" max="30" [(ngModel)]="selectedAction.speed">
                     </div>
                 </div>
                 <!-- Image -->

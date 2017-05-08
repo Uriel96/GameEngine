@@ -10,18 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var code_directive_1 = require('./code.directive');
-var sprites_1 = require('../../services/sprites');
+var global_1 = require('../../services/global');
 var CodeComponent = (function () {
-    function CodeComponent(spritesService) {
-        this.spritesService = spritesService;
+    function CodeComponent(_global) {
+        this._global = _global;
     }
     CodeComponent.prototype.ngDoCheck = function () {
         this.changeCode();
     };
     CodeComponent.prototype.changeCode = function () {
-        if (this.selectedSprite != this.spritesService.getSelectedSprite()) {
-            this.codeEditor.editor.setValue(this.spritesService.getSelectedSprite().code);
-            this.selectedSprite = this.spritesService.getSelectedSprite();
+        if (this.selectedSprite != this._global.selectedSprite) {
+            this.codeEditor.editor.setValue(this._global.selectedSprite.code);
+            this.selectedSprite = this._global.selectedSprite;
         }
     };
     __decorate([
@@ -33,7 +33,7 @@ var CodeComponent = (function () {
             selector: 'code-component',
             templateUrl: './app/pages/code/code.html',
         }), 
-        __metadata('design:paramtypes', [sprites_1.SpritesService])
+        __metadata('design:paramtypes', [global_1.GlobalService])
     ], CodeComponent);
     return CodeComponent;
 }());

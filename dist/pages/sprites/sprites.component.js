@@ -10,8 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var sprites_1 = require('../../services/sprites');
+var global_1 = require('../../services/global');
 var SpritesComponent = (function () {
-    function SpritesComponent(spritesService) {
+    function SpritesComponent(_global, spritesService) {
+        this._global = _global;
         this.spritesService = spritesService;
         this.sprites = this.spritesService.getSprites();
     }
@@ -23,7 +25,7 @@ var SpritesComponent = (function () {
         $("#sprites-container").disableSelection();
     };
     SpritesComponent.prototype.setSelectedSprite = function (spriteName) {
-        this.spritesService.setSelectedSprite(spriteName);
+        this._global.selectedSprite = this.spritesService.getSpriteByName(spriteName);
     };
     SpritesComponent.prototype.deleteSprite = function () {
         var selectedSprites = document.getElementsByClassName("list-group-item active");
@@ -37,7 +39,7 @@ var SpritesComponent = (function () {
             selector: 'sprites-component',
             templateUrl: './app/pages/sprites/sprites.html',
         }), 
-        __metadata('design:paramtypes', [sprites_1.SpritesService])
+        __metadata('design:paramtypes', [global_1.GlobalService, sprites_1.SpritesService])
     ], SpritesComponent);
     return SpritesComponent;
 }());

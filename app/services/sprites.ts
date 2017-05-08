@@ -4,16 +4,15 @@ import { Sprite } from '../models/sprite';
 @Injectable()
 export class SpritesService {
     sprites: Sprite[] = [];
-    selectedSprite: Sprite;
 
     constructor() {
         this.sprites = [
-            new Sprite(
-                "mario", 
-                "http://vignette1.wikia.nocookie.net/mario-fanon/images/3/37/Paper_Mario_Render_1.png/revision/latest?cb=20150214213522&path-prefix=es",
-                48.1,
-                60,
-                `mario.applyGravity(this.dt);
+            {
+                name: "mario", 
+                src: "http://vignette1.wikia.nocookie.net/mario-fanon/images/3/37/Paper_Mario_Render_1.png/revision/latest?cb=20150214213522&path-prefix=es",
+                width: 48.1,
+                height: 60,
+                code: `mario.applyGravity(this.dt);
                     if(keyboard.isKeyDown(KEY.RightArrow)){
                         mario.moveRight(5);
                     } else if(keyboard.isKeyDown(KEY.LeftArrow)){
@@ -26,19 +25,19 @@ export class SpritesService {
                     if(mario.inGround){
                         timer = 0;   
                     }`
-            ), new Sprite(
-                "otro", 
-                "http://i.stack.imgur.com/OrOS9.png",
-                54.4, 
-                58, 
-                `otro.applyGravity(this.dt);`
-            ), new Sprite(
-                "piso",
-                "https://www.transparenttextures.com/patterns/dark-denim-3.png",
-                300,
-                20,
-                "if(piso.isColliding(mario)){ console.log('tocando!!'); }"
-            )
+            }, {
+                name: "otro", 
+                src: "http://i.stack.imgur.com/OrOS9.png",
+                width: 54.4, 
+                height: 58, 
+                code: `otro.applyGravity(this.dt);`
+            }, {
+                name: "piso",
+                src: "https://www.transparenttextures.com/patterns/dark-denim-3.png",
+                width: 300,
+                height: 20,
+                code: `if(piso.isColliding(mario)){ console.log('tocando!!'); }`
+            }
         ];
     }
 
@@ -64,13 +63,7 @@ export class SpritesService {
         }
     }
 
-    getSelectedSprite(): Sprite{
-        return this.selectedSprite;
-    }
-
-    setSelectedSprite(spriteName: string): void {
-        this.selectedSprite = this.sprites.find((sprite) => {
-            return sprite.name == spriteName;
-        });
+    createSprite(sprite: Sprite) {
+        this.sprites.push(sprite);
     }
 }

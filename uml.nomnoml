@@ -1,0 +1,19 @@
+[Alumno
+    |Nombre: String
+    |Edad: Int
+    |getEdad()
+]
+
+[Escuela
+    |Nombre: String
+]
+[Grado
+    |Grado: Int
+]
+[Grupo
+    |Grupo: Char
+]
+
+[Escuela]->[Grado]
+[Grado]->[Grupo]
+[Grupo]->[Alumno]

@@ -11,9 +11,7 @@ import { CodeComponent } from '../code/code.component';
 import { CodeDirective } from '../code/code.directive';
 import { SpritesComponent } from '../sprites/sprites.component';
 import { SpriteDirective } from '../sprites/sprite.directive';
-import { CreateSpriteComponent } from '../createSprite/createSprite.component';
 import { ResizeSpriteComponent } from '../resizeSprite/resizeSprite.component';
-import { CreateSpriteSheetComponent } from '../createSpriteSheet/createSpriteSheet.component';
 import { ShowActionComponent } from '../showAction/showAction.component';
 import { AppService } from '../../services/app';
 import { RuntimeExecutionService } from '../../services/runtimeExecution';
@@ -26,6 +24,10 @@ import { TimeService } from '../../services/configuration/time';
 import { PhysicsService } from '../../services/configuration/physics';
 import { GameObjectsService } from '../../services/gameObjects';
 import { CameraService } from '../../services/configuration/camera';
+import { CreateSpriteComponent } from '../sprites/createSprite/createSprite.component';
+import { CreateSpriteSheetComponent } from '../sprites/createSpriteSheet/createSpriteSheet.component';
+import { ActionService } from '../../services/action';
+import { GlobalService } from '../../services/global';
 
 @NgModule({
 	imports: [ 
@@ -59,7 +61,9 @@ import { CameraService } from '../../services/configuration/camera';
 		PhysicsService,
 		GameService,
 		CameraService,
-		GameObjectsService
+		GameObjectsService,
+		ActionService,
+		GlobalService
 	],
 	bootstrap: [ AppComponent ]
 })
